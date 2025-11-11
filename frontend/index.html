@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    Hello
+    <h1>Video Info</h1>
+    <form>
+        <div>
+            <label>Select a Video</label>
+            <input type="file" accept="video/*">
+        </div>
+        <button type="submit">Submit Video</button>
+    </form>
+    <script>
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const files = document.querySelector('input').files  
+            const file = files[0]
+        })
+    </script>
 </body>
+
 </html>
