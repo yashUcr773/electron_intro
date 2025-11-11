@@ -17,10 +17,21 @@
         <button type="submit">Submit Video</button>
     </form>
     <script>
+
+        const { ipcRenderer, webUtils } = require('electron');
+
+
         document.querySelector('form').addEventListener('submit', (e) => {
             e.preventDefault()
-            const files = document.querySelector('input').files  
-            const file = files[0]
+            const file = document.querySelector('input').files[0]
+            const path = webUtils.getPathForFile(file)
+            console.log("🚀 ~ path:", path)
+            ipcRenderer.send('video:submit', path)
+        })
+
+        ipcRenderer.on('video:length', (event, data) => {
+            console.log("🚀 ~ data:", data)
+            console.log("🚀 ~ event:", event)
         })
     </script>
 </body>
