@@ -1,5 +1,5 @@
-import { app } from 'electron'
+import { app, BrowserWindow } from 'electron'
 
 app.on('ready', () => {
-    console.log('App started')
+    const mainWindow = new BrowserWindow({})
 })
