@@ -1,6 +1,11 @@
 import { app, BrowserWindow } from 'electron';
 import path, { dirname } from 'node:path';
 import { fileURLToPath, format } from 'node:url';
+import { hash } from 'bcrypt'
+
+debugger
+const pass = await hash('pass', 10)
+console.log(pass)
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

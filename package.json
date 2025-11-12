@@ -5,7 +5,9 @@
   "main": "electron-app.js",
   "scripts": {
     "start": "electron .",
-    "start:watch": "nodemon --exec electron ."
+    "start:watch": "nodemon --exec electron .",
+    "debug:main": "electron --inspect=5858 .",
+    "debug-brk:main": "electron --inspect-brk=5858 ."
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/yashUcr773/electron_intro#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "electron": "^39.1.2"
   },
   "devDependencies": {
