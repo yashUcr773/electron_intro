@@ -9,7 +9,13 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
+    // show: false,
+    // backgroundColor: 'red',
   });
+
+  // mainWindow.once('ready-to-show', () => {
+  //   mainWindow.show();
+  // });
 
   mainWindow.loadFile('index.html');
 
