@@ -1,30 +1,35 @@
 import { app, BrowserWindow } from 'electron';
 
-// Keep a global reference of mainwindow so it is not garbage collected.
-let mainWindow;
+// Keep a global reference of parent so it is not garbage collected.
+let parent, child;
 
 // Create window on app ready
 function createWindow() {
   // create and set reference
-  mainWindow = new BrowserWindow({
+  parent = new BrowserWindow({
     width: 1000,
     height: 800,
-    // show: false,
-    // backgroundColor: 'red',
   });
 
-  // mainWindow.once('ready-to-show', () => {
-  //   mainWindow.show();
-  // });
+  child = new BrowserWindow({
+    width: 800,
+    height: 600,
+    parent: parent,
+    modal: true,
+  });
 
-  mainWindow.loadFile('index.html');
+  parent.loadFile('index.html');
+  child.loadFile('index.html');
 
   // Open dev tools for debugging.
-  mainWindow.webContents.openDevTools();
+  parent.webContents.openDevTools();
 
   // unset the reference on close
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  parent.on('closed', () => {
+    parent = null;
+  });
+  child.on('closed', () => {
+    child = null;
   });
 }
 
