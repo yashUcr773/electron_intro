@@ -4,8 +4,10 @@
   "description": "Learn about the Electron app.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "watch": "nodemon --exec electron ."
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yashUcr773/electron_intro.git"
@@ -16,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/yashUcr773/electron_intro/issues"
   },
-  "homepage": "https://github.com/yashUcr773/electron_intro#readme"
+  "homepage": "https://github.com/yashUcr773/electron_intro#readme",
+  "devDependencies": {
+    "electron": "^39.1.2",
+    "nodemon": "^3.1.11"
+  }
 }
