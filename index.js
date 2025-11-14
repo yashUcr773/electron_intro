@@ -32,20 +32,12 @@ app.on('ready', () => {
   createWindow();
 });
 
-// reply back to sender
-ipcMain.on('channel:1', (e, ...args) => {
-  e.sender.send('channel:2', 'Recieved', 'asd');
-});
-
-// send to all windows
-ipcMain.on('channel:1', (e, ...args) => {
-  console.log(e);
+ipcMain.on('channel:sync', async (e, ...args) => {
   console.log(args);
-  broadcast('channel:2', 'Recieved', 'asd');
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(1);
+    }, 10000);
+  });
+  e.returnValue = ['1', '2'];
 });
-
-function broadcast(channel, ...data) {
-  for (const window of BrowserWindow.getAllWindows()) {
-    window.webContents.send(channel, ...data);
-  }
-}
