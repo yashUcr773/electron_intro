@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, webContents } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 // Keep a global reference of mainwindow so it is not garbage collected.
 let mainWindow;
@@ -32,12 +32,13 @@ app.on('ready', () => {
   createWindow();
 });
 
-ipcMain.on('channel:sync', async (e, ...args) => {
+ipcMain.handle('channel:1', async (e, ...args) => {
+  console.log(e);
   console.log(args);
   await new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(1);
-    }, 10000);
+      resolve();
+    }, 3000);
   });
-  e.returnValue = ['1', '2'];
+  return app.getPath('desktop');
 });
