@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 
 // Keep a global reference of mainwindow so it is not garbage collected.
 let mainWindow;
@@ -10,6 +10,10 @@ function createWindow() {
     width: 1000,
     height: 800,
   });
+
+  console.log('getAllDisplays', screen.getAllDisplays());
+  console.log('getPrimaryDisplay', screen.getPrimaryDisplay());
+  console.log('getCursorScreenPoint', screen.getCursorScreenPoint());
 
   mainWindow.loadFile('index.html');
 
