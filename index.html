@@ -21,6 +21,32 @@
   <h1>Hello Electron!</h1>
   <p>Build cross-platform desktop apps with JavaScript, HTML, and CSS</p>
 
+  <button onclick="zoomin()">Zoom in </button>
+  <button onclick="zoomout()">Zoom out </button>
+  <button onclick="zoomreset()">Zoom reset </button>
+
+  <script>
+    const { webFrame } = require('electron');
+
+    console.log(webFrame.getZoomFactor());
+    console.log(webFrame.getZoomLevel());
+
+    function zoomin() {
+      webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
+    }
+
+    function zoomout() {
+      webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
+    }
+
+    function zoomreset() {
+      webFrame.setZoomLevel(0);
+    }
+
+    console.log(webFrame.getResourceUsage())
+  </script>
+
+
 </body>
 
 </html>
