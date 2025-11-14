@@ -1,7 +1,10 @@
 import { app, BrowserWindow } from 'electron';
+import { writeFile } from 'fs';
 
+app.disableHardwareAcceleration();
 // Keep a global reference of mainwindow so it is not garbage collected.
-let mainWindow;
+let mainWindow,
+  i = 1;
 
 // Create window on app ready
 function createWindow() {
@@ -9,12 +12,26 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
+    show: false,
+    webPreferences: {
+      offscreen: true,
+    },
   });
 
-  mainWindow.loadFile('index.html');
+  mainWindow.loadURL('https://yashaggarwal.com');
 
-  // Open dev tools for debugging.
-  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.on('paint', (e, dirty, image) => {
+    const ss = image.toPNG();
+    console.log(app.getPath('desktop') + '/screenshot/' + i + '.png');
+    writeFile(app.getPath('desktop') + '/screenshot/' + i + '.png', ss, console.log);
+    i++;
+  });
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log(mainWindow.getTitle());
+    mainWindow.close();
+    mainWindow = null;
+  });
 
   // unset the reference on close
   mainWindow.on('closed', () => {
