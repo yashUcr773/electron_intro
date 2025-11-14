@@ -4,44 +4,38 @@ import { app, BrowserWindow, session } from 'electron';
 let mainWindow;
 
 // Create window on app ready
-async function createWindow() {
-  // get cookies
-  // const cookies = await session.defaultSession.cookies.get({});
-  // console.log('🚀 ~ createWindow ~ cookies:', cookies);
-
-  // filter cookies
-  // const cookies = await session.defaultSession.cookies.get({ name: 'cookie1' });
-  // console.log('🚀 ~ createWindow ~ cookies:', cookies);
-
-  // set cookies
-  await session.defaultSession.cookies.set({
-    url: 'https://mydomain.com',
-    name: 'cookie1',
-    value: 'myval',
-    expirationDate: new Date().getTime() + 10000,
-  });
-
-  // remove cookies
-  // await session.defaultSession.cookies.remove('https://mydomain.com', 'cookie1');
-
+function createWindow() {
   // create and set reference
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: {
-      partition: 'abc',
-    },
   });
 
-  // mainWindow.loadFile('index.html');
-  mainWindow.loadURL('https://yashaggarwal.com');
+  mainWindow.loadFile('index.html');
 
   // Open dev tools for debugging.
   mainWindow.webContents.openDevTools();
 
-  mainWindow.webContents.on('did-finish-load', async () => {
-    const cookies = await session.defaultSession.cookies.get({});
-    console.log('🚀 ~ createWindow ~ cookies:', cookies);
+  session.defaultSession.on('will-download', (e, downloadItem, webContents) => {
+    // console.log('🚀 ~ createWindow ~ webContents:', webContents);
+    // console.log('🚀 ~ createWindow ~ downloadItem:', downloadItem);
+    // console.log('🚀 ~ createWindow ~ e:', e);
+
+    console.log(
+      `Downloading ${downloadItem.getFilename()} with size ${downloadItem.getTotalBytes()} bytes`
+    );
+
+    downloadItem.setSavePath(app.getPath('desktop') + '/' + downloadItem.getFilename());
+
+    downloadItem.on('updated', (e, state) => {
+      let recieved = downloadItem.getReceivedBytes();
+
+      if (state === 'progressing' && recieved) {
+        let progress = (recieved / downloadItem.getTotalBytes()) * 100;
+        console.log('🚀 ~ createWindow ~ progress:', progress);
+        webContents.executeJavaScript(`window.progressBar.value = ${progress}`);
+      }
+    });
   });
 
   // unset the reference on close
