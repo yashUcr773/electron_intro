@@ -21,6 +21,25 @@
   <h1>Hello Electron!</h1>
   <p>Build cross-platform desktop apps with JavaScript, HTML, and CSS</p>
 
+  <script>
+    const { ipcRenderer } = require('electron')
+
+    async function fun() {
+
+      const notification = new Notification('Electron App', {
+        body: 'Info body!!'
+      })
+
+      notification.addEventListener('click', (e) => {
+        ipcRenderer.invoke('focus-win-instance')
+      })
+    }
+
+    setTimeout(() => {
+      fun()
+    }, 2000)
+  </script>
+
 </body>
 
 </html>

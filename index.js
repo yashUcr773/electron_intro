@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 // Keep a global reference of mainwindow so it is not garbage collected.
 let mainWindow;
@@ -9,6 +9,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   });
 
   mainWindow.loadFile('index.html');
@@ -21,6 +25,11 @@ function createWindow() {
     mainWindow = null;
   });
 }
+
+ipcMain.handle('focus-win-instance', () => {
+  mainWindow.show();
+  return;
+});
 
 // Listen the app ready event
 app.on('ready', () => {
