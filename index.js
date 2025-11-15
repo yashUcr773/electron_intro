@@ -16,6 +16,12 @@ function createWindow() {
   // Open dev tools for debugging.
   mainWindow.webContents.openDevTools();
 
+  let i = 0;
+  setInterval(() => {
+    mainWindow.setProgressBar(i);
+    i += 0.1;
+  }, 1000);
+
   // unset the reference on close
   mainWindow.on('closed', () => {
     mainWindow = null;
